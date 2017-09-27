@@ -4,30 +4,27 @@ import Comments from './CommentList'
 
 class Article extends Component {
     state = {
-        isOpenComments: false,
-        isOpen: false
+        isOpen: false,
+        onButtonClick: () => {}
     }
 
     render() {
         const {article, isOpen, onButtonClick} = this.props
         this.state.isOpen = isOpen
-        const comments = this.state.isOpenComments && <Comments comments={article.comments} />
+        this.state.onButtonClick = onButtonClick
         const body = this.state.isOpen &&
             <section>
                 <div>
                     {article.text}
                 </div>
-                <button onClick={this.handleCommentsButtonClick}>
-                    {this.state.isOpenComments ? 'close comments' : 'open comments'}
-                </button>
-                {comments}
+                <Comments comments={article.comments} />
             </section>
 
         return (
             <div>
                 <h2>
                     {article.title}
-                    <button onClick={onButtonClick}>
+                    <button onClick={this.handleButtonClick}>
                         {this.state.isOpen ? 'close' : 'open'}
                     </button>
                 </h2>
@@ -35,12 +32,14 @@ class Article extends Component {
                 <h3>creation date: {(new Date(article.date)).toDateString()}</h3>
             </div>
         )
+
     }
 
-    handleCommentsButtonClick = () => {
+    handleButtonClick = () => {
         this.setState({
-            isOpenComments: !this.state.isOpenComments
+            isOpen: !this.state.isOpen
         })
+        this.state.onButtonClick()
     }
 }
 
