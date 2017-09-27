@@ -1,30 +1,34 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import Comments from './CommentList'
 
 class Article extends Component {
-    static defaultProps = {
-
-    }
-
-    static propTypes = {
-        article: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            text: PropTypes.string,
-            date: PropTypes.string.isRequired
-        }).isRequired,
-        isOpen: PropTypes.bool,
-        onClick: PropTypes.func
+    state = {
+        isOpenComments: false,
+        isOpen: false
     }
 
     render() {
         const {article, isOpen, onButtonClick} = this.props
-        const body = isOpen && <section>{article.text}</section>
+        this.state.isOpen = isOpen
+        const comments = this.state.isOpenComments && <Comments comments={article.comments} />
+        const body = this.state.isOpen &&
+            <section>
+                <div>
+                    {article.text}
+                </div>
+                <button onClick={this.handleCommentsButtonClick}>
+                    {this.state.isOpenComments ? 'close comments' : 'open comments'}
+                </button>
+                {comments}
+            </section>
+
         return (
             <div>
                 <h2>
                     {article.title}
                     <button onClick={onButtonClick}>
-                        {isOpen ? 'close' : 'open'}
+                        {this.state.isOpen ? 'close' : 'open'}
                     </button>
                 </h2>
                 {body}
@@ -32,6 +36,23 @@ class Article extends Component {
             </div>
         )
     }
+
+    handleCommentsButtonClick = () => {
+        this.setState({
+            isOpenComments: !this.state.isOpenComments
+        })
+    }
+}
+
+Article.propTypes = {
+    article: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        text: PropTypes.string,
+        date: PropTypes.string.isRequired,
+        comments: PropTypes.array
+    }).isRequired,
+    isOpen: PropTypes.bool,
+    onButtonClick: PropTypes.func
 }
 
 
