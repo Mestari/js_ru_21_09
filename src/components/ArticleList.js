@@ -1,42 +1,23 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Article from './Article'
+import accordion from '../decorators/accordion'
 
-class ArticleList extends Component {
-    state = {
-        openArticleId: null
-    }
+function ArticleList(props) {
+    const {articles, openElementId, toggleOpenElement} = props
+    if (!articles.length) return <h3>No Articles</h3>
+    const articleElements = articles.map((article) => <li key={article.id}>
+        <Article article={article}
+                 isOpen={article.id === openElementId}
+                 onButtonClick={toggleOpenElement(article.id)}
+        />
+    </li>)
 
-    render() {
-        const {articles} = this.props
-        if (!articles.length) return <h3>No Articles</h3>
-        const articleElements = articles.map((article) => <li key={article.id}>
-            <Article article={article}
-                     isOpen={article.id === this.state.openArticleId}
-                     onButtonClick={this.toggleArticle(article.id)}
-            />
-        </li>)
-        return (
-            <ul>
-                {articleElements}
-            </ul>
-        )
-    }
-
-    toggleArticle = (openArticleId) => {
-        if (this.memoized.get(openArticleId)) return this.memoized.get(openArticleId)
-        const func = (ev) => {
-            this.setState({
-                openArticleId: this.state.openArticleId === openArticleId ? null : openArticleId
-            })
-        }
-
-        this.memoized.set(openArticleId, func)
-
-        return func
-    }
-
-    memoized = new Map()
+    return (
+        <ul>
+            {articleElements}
+        </ul>
+    )
 }
 
 
@@ -48,4 +29,4 @@ ArticleList.propTypes = {
     articles: PropTypes.array.isRequired
 }
 
-export default ArticleList
+export default accordion(ArticleList)
