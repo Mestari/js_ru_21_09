@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import Select from 'react-select'
 import ArticleList from './ArticleList'
 import ArticlesChart from './ArticlesChart'
+import Calendar from './Calendar'
+
 import 'react-select/dist/react-select.css'
 
 class App extends Component {
@@ -23,7 +25,8 @@ class App extends Component {
         return (
             <div>
                 <h1>App name</h1>
-                User: <input type = 'text' value = {username} onChange = {this.handleUserChange}/>
+                <Calendar/>
+                <div>User: <input type = 'text' value = {username} onChange = {this.handleUserChange}/></div>
                 <Select options={options} value={selected} onChange={this.handleChange} multi />
                 <ArticleList articles={articles}/>
                 <ArticlesChart articles={articles}/>
