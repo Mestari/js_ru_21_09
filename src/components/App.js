@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Route, NavLink} from 'react-router-dom'
 import ArticlesPage from './routes/ArticlesPage'
+import CommentsToPage from './CommentsToPage'
 import Filters from './Filters'
 import Counter from './Counter'
 
@@ -24,6 +25,7 @@ class App extends Component {
                 <Route path = '/counter' component = {Counter} />
                 <Route path = '/filters' component = {Filters} />
                 <Route path = '/articles' component = {ArticlesPage} />
+                <Route path = '/comments/:page' component = {CommentsToPage} />
             </div>
         )
     }
