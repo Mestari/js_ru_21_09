@@ -1,10 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import Localization from './Localization'
 
 function Loader(props) {
     return (
         <h3>
-            Loading...
+            <Localization>Loading</Localization>...
         </h3>
     )
 }

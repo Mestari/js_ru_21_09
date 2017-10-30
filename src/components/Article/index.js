@@ -6,6 +6,7 @@ import Loader from '../Loader'
 import {findDOMNode} from 'react-dom'
 import {connect} from 'react-redux'
 import {deleteArticle, loadArticle} from '../../AC'
+import Localization from '../Localization'
 import './style.css'
 
 class Article extends Component {
@@ -45,8 +46,8 @@ class Article extends Component {
             <div>
                 <h2 ref = {this.setHeaderRef}>
                     {article.title}
-                    <span onClick = {this.increment}>Clicked: {this.state.clicked} times</span>
-                    <button onClick = {this.handleDelete}>delete me</button>
+                    <span onClick = {this.increment}><Localization>Clicked</Localization>: {this.state.clicked} <Localization>times</Localization></span>
+                    <button onClick = {this.handleDelete}><Localization>delete me</Localization></button>
                 </h2>
                 <ReactCSSTransitionGroup
                     transitionName = 'article'
@@ -56,7 +57,7 @@ class Article extends Component {
                 >
                     {this.getBody()}
                 </ReactCSSTransitionGroup>
-                <h3>creation date: {(new Date(article.date)).toDateString()}</h3>
+                <h3><Localization>creation date</Localization>: {(new Date(article.date)).toDateString()}</h3>
             </div>
         )
     }
